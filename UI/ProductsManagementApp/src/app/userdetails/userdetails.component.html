@@ -1,0 +1,48 @@
+<div class="container">
+
+  <h1 class="text-center mt-3">Product Management Application</h1>
+  <button class="btn btn-md btn-dark mb-5 mt-4" routerLink="signup">Create New Product</button>
+
+  <div class="form-group mb-5">
+    <input type="text" class="form-control search-field" placeholder="Search Here" [(ngModel)]="searchText" (input)="filterAndPaginate()">
+  </div>
+
+  <table class="table table-bordered text-center table-success">
+    <thead class="table-dark">
+      <tr>
+        <th scope="col" >Name</th>
+        <th scope="col">Price</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Edit</th>
+        <th scope="col">Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of paginatedUserDetails | searchfilter: searchText" >
+        <td>{{user.name}}</td>
+        <td>{{user.price}}</td>
+        <td>{{user.quantity}}</td>
+        <td>
+          <button class="btn btn-warning" (click)="editproduct(user.id)">Edit</button>
+        </td>
+        <td>
+          <button class="btn btn-danger" (click)="deleteproduct(user.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <nav>
+    <ul class="pagination justify-content-center">
+      <li class="page-item" [class.disabled]="currentPage === 1">
+        <a class="page-link" (click)="changePage(currentPage - 1)">Previous</a>
+      </li>
+      <li class="page-item" *ngFor="let page of pages" [class.active]="page === currentPage">
+        <a class="page-link" (click)="changePage(page)">{{ page }}</a>
+      </li>
+      <li class="page-item" [class.disabled]="currentPage === totalPages">
+        <a class="page-link" (click)="changePage(currentPage + 1)">Next</a>
+      </li>
+    </ul>
+  </nav>
+</div>
